@@ -8,7 +8,6 @@ no warnings 'File::Find';
 # This is what I came up with first time reading the question
 sub findeach_and_remove_world_write_permissions {
     foreach my $filedscr (@_) {
-        print $filedscr . "\n";
         find(sub {
                 my $mode = (stat($filedscr))[2];
                 chmod($mode &07775, $filedscr);
