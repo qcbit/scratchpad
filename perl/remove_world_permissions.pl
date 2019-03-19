@@ -5,7 +5,7 @@ use strict;
 use File::Find;
 no warnings 'File::Find';
 
-# This is what I came up with first time reading the question
+# This is what I came up with first time reading the challenge
 sub findeach_and_remove_world_write_permissions {
     foreach my $filedscr (@_) {
         find(sub {
@@ -25,7 +25,7 @@ sub remove_world_write_permissions {
     $mode = (stat($filedscr))[2]
 }
 
-# I think this one more closely answers the question.
+# I think this one more closely solves the challenge
 sub remove_world_write_permissions_under {
     foreach (@_) {
         find(sub {
@@ -35,11 +35,4 @@ sub remove_world_write_permissions_under {
         $_);
     }
 }
-
-my @my_list = qw/t bad_variables.t cpan-bootstrap.pl Makefile.PL.include/;
-my @my_list = qw/author cpan-bootstrap.t release taint-mode.t stackable.t local CPANBootstrapper.pm script pm_to_blib Makefile Makefile.PL/;
-#findeach_and_remove_world_write_permissions(@my_list);
-my @paths = qw/macvim local-lib-2.000_020/;
-#remove_world_write_permissions_under(@paths);
-remove_world_write_permissions('remove_world_permissions.pl');
 
