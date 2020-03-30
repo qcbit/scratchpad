@@ -1,0 +1,19 @@
+#!/bin/bash
+
+func one() {
+    echo "One"
+}
+
+func two() {
+    echo "Two"
+}
+
+func three() {
+    echo "Three"
+}
+
+func four() {
+    echo "Four"
+}
+
+declare -F
