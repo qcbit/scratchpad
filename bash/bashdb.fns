@@ -9,8 +9,9 @@ _steptrap() {
         let _steps="$_steps - 1"
     fi
 
-    # Enter debugger cases
-
+    ########################
+    # Enter debugger cases #
+    ########################
     # If a line number breakpoint was reached
     if _at_linenumbp; then
         _msg "Reached breakpoint at line $_curline"
@@ -21,5 +22,105 @@ _steptrap() {
         _msg "Break condition $_brcond true at line $_curline"
         _cmdloop
 
-    # Else if in
+    # Else if in step mode and the number of steps is up
+    elif (( $_steps == 0 )); then
+        _msg "Stopped at line $_curline"
+        _cmdloop
+    fi
+}
+
+# The Debugger Command Loop
+
+_cmdloop() {
+    local cmd args
+
+    while read -e -p "bashdb> " cmd args; do
+        case $cmd in
+            \? | h ) _menu ;;           # help menu
+            bc ) _setbc $args ;;        # set break condition
+            bp ) _setbp $args ;;        # set breakpoint at the given line
+            cb ) _clearbp $args ;;      # clear one or all breakpoints
+            ds ) _displayscript ;;      # list the script and show the breakpoints
+            g  ) return ;;              # "go": start/resume execution of the script
+            q  ) exit ;;                # quit
+            s  ) let _steps=${args:-1}  # single step N times (default 1)
+                 return ;;
+            x  ) _xtrace ;;             # toggle trace
+            !* ) eval ${cmd#!} $args ;; # pass to the shell
+            *  ) _msg "Invalid command: '$cmd'" ;;
+        esac
+    done
+}
+
+# Set a breakpoint at the given line number or list breakpoints
+_setbp() {
+    local i
+
+    if [[ -z "$1" ]]; then
+        _listbp
+    elif [[ $(echo $1 | grep '^[0-9]*') ]]; then
+        if [[ -n "${_lines[$1]}" ]]; then
+            _linebp=($(echo $( (for i in ${_linebp[*]} $1; do
+                echo $i; done) | sort -n) ))
+            _msg "Breakpoint set at line $1"
+        else
+            _msg "Breakpoints can only be set on non-blank lines"
+        fi
+    else
+        _msg "Please specify a numeric line number"
+    fi
+}
+
+_clearbp() {
+    local i
+
+    if [[ -z "$1" ]]; then
+        unset _linebp[*]
+        _msg "All breakpoints have been cleared"
+    elif [[ $(echo $1 | grep '^[0-9]*') ]]; then
+        _linebp=($(echo $(for i in $(_linebp[*]); do
+            if (( $1 != $i )); then echo $i; fi; done) ))
+        _msg "Breakpoint cleared at line $1"
+    else
+        _msg "Please specify a numeric line number"
+    fi
+}
+
+# Check breakpoint
+_at_linenumbp() {
+    local i = 0
+
+    if [[ "$_linebp" ]]; then
+        while (( $i < ${#_linebp[@]} )); do
+            if (( ${_linebp[$i]} == $_curline )); then
+                return 0
+            fi
+            let i=$i+1
+        done
+    fi
+
+    return 1
+}
+
+# Output shell script with breakpoints and current line
+_displayscript() {
+    local i=1 j=0 bp cl
+
+    ( while (( $i < ${#_linebp[@]} )); do
+        if [[ ${_linebp[$j]} ]] && (( ${_linebp[$j]} == $i )); then
+            bp='*'
+            let j=$j+1
+        else
+            bp=' '
+        fi
+
+        if (( $_curline == $i )); then
+            cl=">"
+        else
+            cl=" "
+        fi
+
+        echo "$i:$bp $cl ${_lines[$i]}"
+        let i=$i+1
+    done ) | more
 }
