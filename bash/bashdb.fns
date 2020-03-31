@@ -111,7 +111,7 @@ _clearbp() {
 
 # Check breakpoint
 _at_linenumbp() {
-    local i = 0
+    local i=0
 
     if [[ "$_linebp" ]]; then
         while (( $i < ${#_linebp[@]} )); do
