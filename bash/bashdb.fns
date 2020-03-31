@@ -67,8 +67,31 @@ _setbp() {
             _msg "Breakpoints can only be set on non-blank lines"
         fi
     else
-        _msg "Please specify a numeric line number"
+        _errmsg "Please specify a numeric line number"
     fi
+}
+
+# Set or clear break condition
+_setbc() {
+    if [[ -n "$*" ]]; then
+        _brcond=$args
+        _msg "Break when true: $_brcond"
+    else
+        _brcond=
+        _msg "Cleared break condition"
+    fi
+}
+
+# List breakpoints and break conditions
+_listbp() {
+    if [[ -n "$_linebp" ]]; then
+        _msg "Breakpoints at lines: ${_linebp[*]}"
+    else
+        _msg "No breakpoints have been set"
+    fi
+    
+    _msg "Break on condition:"
+    _msg "$_brcond"
 }
 
 _clearbp() {
@@ -82,7 +105,7 @@ _clearbp() {
             if (( $1 != $i )); then echo $i; fi; done) ))
         _msg "Breakpoint cleared at line $1"
     else
-        _msg "Please specify a numeric line number"
+        _errmsg "Please specify a numeric line number"
     fi
 }
 
@@ -123,4 +146,44 @@ _displayscript() {
         echo "$i:$bp $cl ${_lines[$i]}"
         let i=$i+1
     done ) | more
+}
+
+# Toggle trace
+_xtrace() {
+    let _trace="! $_trace"
+    _msg "Execution trace "
+    if (( $_trace )); then 
+        _msg "on"
+    else
+        _msg "off"
+    fi
+}
+
+_msg() {
+    echo -e "$@" >&2
+}
+
+_errmsg() {
+    echo -e "Err: $@" >&2
+}
+
+_menu() {
+    _msg 'bashdb commands:
+        bp N        Set breakpoint at line N
+        bp          List breakpoints and break condition
+        bc string   Set break condition to string
+        bc          Clear break condition
+        cb N        Clear breakpoint at line N
+        cb          Clear all breakpoints
+        ds          Display the script and breakpoints
+        g           Resume "Go" execution
+        s [N]       Execute N statements (default 1)
+        x           Toggle execution trace on/off
+        h, ?        Print this menu
+        ! string    passes string to a shell
+        q           Quit'
+}
+
+_cleanup() {
+    rm $_debugfile 2>/dev/null
 }
