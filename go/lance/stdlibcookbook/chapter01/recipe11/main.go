@@ -1,13 +1,24 @@
+// Shutdown process gracefully to prevent resource leakage
+// The reading from a sigChan is blocking so the program keeps running
+// until the Signal is sent through the channel. The sigChan is the
+// channel where the Notify function sends the signals.
+//
+// The main code of the program runs in a new goroutine. This way,
+// the work continues while the main function is blocked on the sigChan.
+// Once the signal from operation system is sent to process, the sigChan
+// receives the signal and the code below the line where the reading from
+// the sigChan channel is executed. This code section could be considered
+// as the cleanup section.
 package main
 
 import (
+	"fmt"
+	"io"
+	"log"
 	"os"
 	"os/signal"
-	"fmt"
-	"time"
-	"log"
-	"io"
 	"syscall"
+	"time"
 )
 
 var writer *os.File
@@ -19,7 +30,7 @@ func main() {
 		panic(err)
 	}
 
-	// The code is running in a goroutine independently. 
+	// The code is running in a goroutine independently.
 	// If program is terminated from outside,
 	// then let the goroutine know via the closeChan
 	closeChan := make(chan bool)
@@ -43,13 +54,13 @@ func main() {
 		syscall.SIGQUIT,
 		syscall.SIGINT)
 
-		// Blocking read from sigChan where the Notify function sends the signal
-		<-sigChan
+	// Blocking read from sigChan where the Notify function sends the signal
+	<-sigChan
 
-		// Clean up section after signal received
-		close(closeChan)
-		releaseAllResources()
-		fmt.Println("The application shut down gracefully")
+	// Clean up section after signal received
+	close(closeChan)
+	releaseAllResources()
+	fmt.Println("The application shut down gracefully")
 }
 
 func releaseAllResources() {
