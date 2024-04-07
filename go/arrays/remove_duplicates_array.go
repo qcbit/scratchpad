@@ -6,32 +6,32 @@ import "fmt"
 
 func main() {
 	// case: odd elements
-	fmt.Println(filter_duplicates([]int{2, 2, 2, 5, 7, 7, 8, 9, 9, 9, 9}))
+	fmt.Println(filterDuplicates([]int{2, 2, 2, 5, 7, 7, 8, 9, 9, 9, 9}))
 	// case: even elements
-	fmt.Println(filter_duplicates([]int{2, 2, 2, 5, 7, 7, 8, 9, 9, 9}))
+	fmt.Println(filterDuplicates([]int{2, 2, 2, 5, 7, 7, 8, 9, 9, 9}))
 	// case: two elements
-	fmt.Println(filter_duplicates([]int{1, 2}))
+	fmt.Println(filterDuplicates([]int{1, 2}))
 	// case: two same elements
-	fmt.Println(filter_duplicates([]int{1, 1}))
+	fmt.Println(filterDuplicates([]int{1, 1}))
 	// case: no duplicates
-	fmt.Println(filter_duplicates([]int{1, 2, 3, 4, 5, 6, 7, 8, 9}))
+	fmt.Println(filterDuplicates([]int{1, 2, 3, 4, 5, 6, 7, 8, 9}))
 }
 
-func filter_duplicates(sorted_array []int) []int {
+func filterDuplicates(sortedArray []int) []int {
 	var a, b, p int
 
 	// Solves case 0 and 1
-	if len(sorted_array) < 2 {
-		return sorted_array
+	if len(sortedArray) < 2 {
+		return sortedArray
 	}
 
-	for b < len(sorted_array) {
-		if sorted_array[p] != sorted_array[b] {
-			sorted_array[a+1] = sorted_array[b]
+	for b < len(sortedArray) {
+		if sortedArray[p] != sortedArray[b] {
+			sortedArray[a+1] = sortedArray[b]
 			a++
 		}
 		b++
 		p = b - 1
 	}
-	return sorted_array[:a+1]
+	return sortedArray[:a+1]
 }
