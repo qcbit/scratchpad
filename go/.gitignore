@@ -4,3 +4,5 @@
 ./src/github.com/lizrice
 ./src/github.com/stretchr
 ./src/golang.org
+
+.DS_Store
