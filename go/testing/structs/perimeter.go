@@ -1,9 +1,11 @@
 package learningStructs
 
-func Perimeter(rect Rectangle) float64 {
+import "math"
+
+func (rect Rectangle) Perimeter() float64 {
 	return 2*(rect.Length + rect.Width)
 }
 
-func Perimeter(circ Circle) float64 {
-	return 0
+func (circ Circle) Perimeter() float64 {
+	return 2 * math.Pi * circ.Radius
 }

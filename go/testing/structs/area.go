@@ -1,9 +1,11 @@
 package learningStructs
 
-func Area(rect Rectangle) float64 {
+import "math"
+
+func (rect Rectangle) Area() float64 {
 	return rect.Length * rect.Width
 }
 
-func Area(circ Circle) float64 {
-	return 0
+func (circ Circle) Area() float64 {
+	return circ.Radius * circ.Radius * math.Pi
 }

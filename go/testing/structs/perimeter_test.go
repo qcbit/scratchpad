@@ -13,14 +13,14 @@ func TestPerimeter(t *testing.T) {
 
   t.Run("rectangle", func(t *testing.T) {
     rect := Rectangle{10.0, 10.0}
-    got := Perimeter(rect)
+    got := rect.Perimeter()
     want := 40.0
     assertCorrect(t, got, want)
   })
 
   t.Run("circle", func(t *testing.T) {
-    circ := Circle{0, 0, 10.0}
-    got := Perimeter(circ)
+    circ := Circle{Point{0, 0}, 10.0}
+    got := circ.Perimeter()
     want := 62.83185307179586
     assertCorrect(t, got, want)
 })

@@ -13,14 +13,14 @@ func TestArea(t *testing.T) {
 
 	t.Run("rectangle", func(t *testing.T) {
 		rect := Rectangle{10.0, 10.0}
-		got := Area(rect)
+		got := rect.Area()
 		want := 100.0
 		assertCorrect(t, got, want)
 	})
 
 	t.Run("circle", func(t *testing.T) {
-		circ := Circle{0, 0, 10.0}
-		got := Area(circ)
+		circ := Circle{Point{0.0, 0.0}, 10.0}
+		got := circ.Area()
 		want := 314.1592653589793
 		assertCorrect(t, got, want)
 	})
