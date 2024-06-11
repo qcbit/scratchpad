@@ -1,6 +1,6 @@
 package learningStructs
 
-func Perimeter(l, w float64) float64 {
-	return 2*(l + w)
+func Perimeter(rect Rectangle) float64 {
+	return 2*(rect.Length + rect.Width)
 }
 

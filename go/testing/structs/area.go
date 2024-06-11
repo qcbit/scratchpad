@@ -1,5 +1,5 @@
 package learningStructs
 
-func Area(l, w float64) float64 {
-	return l*w
+func Area(rect Rectangle) float64 {
+	return rect.Length * rect.Width
 }

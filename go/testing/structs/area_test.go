@@ -3,7 +3,8 @@ package learningStructs
 import "testing"
 
 func TestArea(t *testing.T) {
-	got := Area(10.0, 10.0)
+	rect := Rectangle{10.0, 10.0}
+	got := Area(rect)
 	want := 100.0
 
 	if got != want {
