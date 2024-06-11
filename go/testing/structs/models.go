@@ -18,3 +18,8 @@ type Circle struct {
   Point  Point
   Radius float64
 }
+
+type Triangle struct {
+  Base float64
+  Height float64
+}
