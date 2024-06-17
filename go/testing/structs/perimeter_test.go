@@ -23,6 +23,6 @@ func TestPerimeter(t *testing.T) {
     got := circ.Perimeter()
     want := 62.83185307179586
     assertCorrect(t, got, want)
-})
+  })
 }
 
