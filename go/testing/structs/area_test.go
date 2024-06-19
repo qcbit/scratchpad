@@ -5,13 +5,13 @@ import "testing"
 func TestArea(t *testing.T) {
 
 	areaTests := []struct {
-		Name string
-		shape Shape
-    	hasArea  float64
-	} {
+		Name    string
+		shape   Shape
+		hasArea float64
+	}{
 		{"Rectangle", Rectangle{Width: 12, Length: 6}, 72.0},
-    	{"Circle",Circle{Point{X: 0, Y: 0}, 10}, 314.1592653589793},
-    	{"Triangle", Triangle{Base: 12,Height: 6},36.0},
+		{"Circle", Circle{Point{X: 0, Y: 0}, 10}, 314.1592653589793},
+		{"Triangle", Triangle{Base: 12, Height: 6}, 36.0},
 	}
 
 	for _, tt := range areaTests {
@@ -21,7 +21,7 @@ func TestArea(t *testing.T) {
 				t.Errorf("%#v got %.2f want %.2f", tt.shape, got, tt.hasArea)
 			}
 		})
-		
+
 	}
 
 	checkArea := func(t *testing.T, shape Shape, want float64) {
