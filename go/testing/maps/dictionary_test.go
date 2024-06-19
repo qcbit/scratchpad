@@ -70,3 +70,15 @@ func TestUpdate(t *testing.T) {
 		assertError(t, err, ErrWordDoesNotExist)
 	})
 }
+
+func TestDelete(t *testing.T) {
+	word := "test"
+	def := "this is just a test"
+	dictionary := Dictionary{word: def}
+	dictionary.Delete(word)
+	_, err := dictionary.Search(word)
+	if err != ErrNotFound {
+		t.Errorf("Expected %q to be deleted", word)
+	}
+
+}
