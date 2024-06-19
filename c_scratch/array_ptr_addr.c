@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     arr[3] = 23;
     arr[4] = 18;
 
-    printf("int* ptr = &arr[0]")
+    printf("int* ptr = &arr[0]\n");
     int* ptr = &arr[0];
     for (;;)
     {
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
         ptr++;
     }
 
-    printf("ptr = &*arr")
+    printf("ptr = &*arr\n");
     ptr = &*arr;
     for (;;)
     {
@@ -33,8 +33,20 @@ int main(int argc, char **argv)
         ptr++;
     }
 
-    printf("ptr = &arr")
+    printf("ptr = &arr\n");
     ptr = &arr;
+    for (;;)
+    {
+        printf("%d\n", *ptr);
+        if (ptr == &arr[SIZE - 1])
+        {
+            break;
+        }
+        ptr++;
+    }
+
+    printf("ptr = arr\n");
+    ptr = arr;
     for (;;)
     {
         printf("%d\n", *ptr);

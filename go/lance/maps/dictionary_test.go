@@ -9,6 +9,6 @@ func TestSearch(t *testing.T) {
 	expected := "this is just a test"
 
 	if actual != expected {
-		t.Errorf("actual: %q expected: %q given, q%", actual, expected, "test")
+		t.Errorf("actual: %q expected: %q given, %q", actual, expected, "test")
 	}
 }
