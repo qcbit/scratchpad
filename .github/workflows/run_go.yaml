@@ -1,0 +1,8 @@
+name: Go Run
+
+on:
+  push
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
