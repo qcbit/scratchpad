@@ -8,8 +8,6 @@ mean_x = np.mean(x)
 mean_y = np.mean(y)
 print("Mean of x is ", mean_x)
 print("Mean of y is ", mean_y)
-print("Sum x - mean_x is ", np.sum(x - mean_x))
-print("Sum y - mean_y is ", np.sum(y - mean_y))
 
 numerator = np.sum((x - mean_x) * (y - mean_y))
 denominator = np.sum((x - mean_x) ** 2)
