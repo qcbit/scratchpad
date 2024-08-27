@@ -10,7 +10,7 @@ func helper(A []int, start, end int){
 		return 
 	}
 
-	mid := (start+end)/2
+	mid := start+(end-start)/2
 	helper(A, start, mid)
 	helper(A, mid+1, end)
 	merge(A, start, mid, end)
