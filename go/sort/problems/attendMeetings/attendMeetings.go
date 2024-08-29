@@ -44,17 +44,19 @@ func (a ByTime) Len() int           { return len(a) }
 func (a ByTime) Swap(i, j int)	  { a[i], a[j] = a[j], a[i] }
 func (a ByTime) Less(i, j int) bool { return a[i][0] < a[j][0] || a[i][0] == a[j][0] && a[i][1] < a[j][1] }
 
+const (
+	START = 0
+	END = 1
+)
+
 func can_attend_all_meetings(intervals [][]int) int {
 	sort.Sort(ByTime(intervals))
 	canAttend := true
-	start := 0
-	end := intervals[0][1]
-	for i := 1; i < len(intervals); i++ {
-		if intervals[i][start] < end {
+	for i := 0; i < len(intervals)-1; i++ {
+		if intervals[i+1][START] < intervals[i][END] {
 			canAttend = false
 			break
 		}
-		end = intervals[i][1]
 	}
 	return canAttendMeetings(canAttend)
 }
