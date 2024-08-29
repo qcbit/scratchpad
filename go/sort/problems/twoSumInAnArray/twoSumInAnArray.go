@@ -35,22 +35,15 @@
 // Array can contain duplicate elements.
 package twoSumInAnArray
 
-import (
-	sort "github.com/qcbit/scratchpad/go/sort"
-)
-
 func two_sum(numbers []int, target int) []int {
-	sorted_array := sort.MergeSort(numbers)
-	i, j := 0, len(sorted_array) - 1
-	for i < j {
-		if sorted_array[i] + sorted_array[j] == target {
-			return []int{i,j}
-		} else if sorted_array[i] + sorted_array[j] < target {
-			i++
+	values := make(map[int]int, len(numbers))
+	for aNdx, a := range numbers {
+		b := target - a
+		if _, ok := values[b]; ok {
+			return []int{aNdx, values[b]}
 		} else {
-			j--
+			values[a] = aNdx
 		}
 	}
-
 	return []int{-1,-1}
 }
