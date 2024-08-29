@@ -36,17 +36,25 @@
 // 0 <= start time < end time <= 109
 package attendmeetings
 
+import "sort"
+
+// ByTime implements sort.Interface for []Interval based on the start field.
+type ByTime [][]int
+func (a ByTime) Len() int           { return len(a) }
+func (a ByTime) Swap(i, j int)	  { a[i], a[j] = a[j], a[i] }
+func (a ByTime) Less(i, j int) bool { return a[i][0] < a[j][0] || a[i][0] == a[j][0] && a[i][1] < a[j][1] }
+
 func can_attend_all_meetings(intervals [][]int) int {
-	sorted_times := MergeSort(intervals)
+	sort.Sort(ByTime(intervals))
 	canAttend := true
 	start := 0
-	end := sorted_times[0][1]
-	for i := 1; i < len(sorted_times); i++ {
-		if sorted_times[i][start] < end {
+	end := intervals[0][1]
+	for i := 1; i < len(intervals); i++ {
+		if intervals[i][start] < end {
 			canAttend = false
 			break
 		}
-		end = sorted_times[i][1]
+		end = intervals[i][1]
 	}
 	return canAttendMeetings(canAttend)
 }
@@ -56,45 +64,4 @@ func canAttendMeetings(trueVal bool) int {
 		return 1
 	}
 	return 0
-}
-
-func MergeSort(A [][]int) [][]int {
-	helper(A, 0, len(A)-1)
-	return A
-}
-
-func helper(A [][]int, start, end int){
-	if start == end {
-		return 
-	}
-
-	mid := start+(end-start)/2
-	helper(A, start, mid)
-	helper(A, mid+1, end)
-	merge(A, start, mid, end)
-}
-
-func merge(A [][]int, start, mid, end int) {
-	aux := make([][]int, 0, end-start+1)
-	i := start
-	j := mid + 1
-	for i <= mid && j <= end {
-		if A[i][0] <= A[j][0] {
-			aux = append(aux, A[i])
-			i++
-		} else {
-			aux = append(aux, A[j])
-			j++
-		}
-	}
-	for i <= mid {
-		aux = append(aux, A[i])
-		i++
-	}
-	for j <= end {
-		aux = append(aux, A[j])
-		j++
-	}
-
-	copy(A[start:end+1], aux)
 }
