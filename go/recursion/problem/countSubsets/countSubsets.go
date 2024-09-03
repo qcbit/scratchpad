@@ -19,3 +19,10 @@
 
 // 0 <= input number <= 30.
 package countsubsets
+
+func count_all_subsets(n int) int {
+    if n == 0 {
+		return 1
+	}
+    return 2 * count_all_subsets(n-1)
+}
