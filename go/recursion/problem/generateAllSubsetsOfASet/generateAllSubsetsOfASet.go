@@ -24,18 +24,18 @@ package generateAllSubsetsOfASet
 
 func generate_all_subsets(s string) []string {
 	results := make([]string, 0)
-	helper(s, 0, "", &results)
+	helper(s, 0, []byte{}, &results)
 
 	return results
 }
 
-func helper(s string, ndx int, slate string, results *[]string) {
+func helper(s string, ndx int, slate []byte, results *[]string) {
 	if ndx == len(s) {
-		*results = append(*results, slate)
+		*results = append(*results, string(slate))
 		return
 	}
-	
-	slate += string(s[ndx])
+
+	slate = append(slate, s[ndx])
 	helper(s, ndx+1, slate, results)
 	slate = slate[:len(slate)-1]
 	helper(s, ndx+1, slate, results)
