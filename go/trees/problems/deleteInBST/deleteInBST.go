@@ -47,8 +47,8 @@ func delete_from_bst(root *BinaryTreeNode, values_to_be_deleted []int) *BinaryTr
 	return root
 }
 
-func delete(root *BinaryTreeNode, k int) *BinaryTreeNode {
-	curr := root
+func delete(node *BinaryTreeNode, k int) *BinaryTreeNode {
+	curr := node
 	var prev *BinaryTreeNode
 
 	// search
@@ -65,7 +65,7 @@ func delete(root *BinaryTreeNode, k int) *BinaryTreeNode {
 	}
 
 	if curr == nil {
-		return root
+		return node
 	}
 
 	// leaf node
@@ -90,8 +90,8 @@ func delete(root *BinaryTreeNode, k int) *BinaryTreeNode {
 	}
 	if child != nil {
 		if prev == nil { // special case of deleting the root
-			root = child
-			return root
+			node = child
+			return node
 		}
 		// deletion of node, but keeping descendants
 		if curr == prev.left {
@@ -120,5 +120,5 @@ func delete(root *BinaryTreeNode, k int) *BinaryTreeNode {
 		}
 	}
 
-	return root
+	return node
 }
