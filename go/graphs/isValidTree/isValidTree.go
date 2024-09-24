@@ -66,7 +66,25 @@
 // 0 <= node value < number of nodes
 package isvalidtree
 
+type Graph struct {
+	adjList [][]int
+	n       int
+}
+
+func NewGraph(nodeCount int, edgeStart, edgeEnd []int) *Graph {
+	adjList := make([][]int, nodeCount)
+	for i := 0; i < nodeCount; i++ {
+		adjList[edgeStart[i]] = append(adjList[edgeStart[i]], edgeEnd[i])
+		adjList[edgeEnd[i]] = append(adjList[edgeEnd[i]], edgeStart[i])
+	}
+	return &Graph{adjList: adjList, n: nodeCount}
+}
+
+type Queue []int
+
 func is_it_a_tree(node_count int, edge_start []int, edge_end []int) bool {
-	// Write your code here.
+	g := NewGraph(node_count, edge_start, edge_end)
+	visited := make([]int, node_count)
+	parent := make([]int, node_count)
 	return false
 }
