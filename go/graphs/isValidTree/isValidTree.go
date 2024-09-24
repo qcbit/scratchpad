@@ -82,9 +82,33 @@ func NewGraph(nodeCount int, edgeStart, edgeEnd []int) *Graph {
 
 type Queue []int
 
+func NewQueue() *Queue {
+	return &Queue
+}
+
+func (q *Queue) Enqueue(x int) {
+	*q = append(*q, x)
+}
+
+func (q *Queue) Dequeue() (int, bool) {
+	if len(*q) == 0 {
+		return -1, false
+	}
+	x := (*q)[0]
+	*q = (*q)[1:]
+	return x, true
+}
+
 func is_it_a_tree(node_count int, edge_start []int, edge_end []int) bool {
 	g := NewGraph(node_count, edge_start, edge_end)
 	visited := make([]int, node_count)
 	parent := make([]int, node_count)
+	var components int
+	for v := 0; v < node_count; v++ {
+		// disconnected components means not a valid tree
+		if components > 1 {
+			return false
+		}
+	}
 	return false
 }
