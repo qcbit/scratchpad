@@ -21,6 +21,10 @@
 // 0 <= n <= 46
 package fibonacci
 
+// find_fibonacci returns the nth Fibonacci number.
+// The function uses a technique called memoization to store the results of expensive function calls and return the cached result when the same inputs occur again.
+// T(n) = O(n)
+// S(n) = O(1)
 func find_fibonacci(n int) int {
 	memo := make([]int, 3)
 	memo[0] = 0
