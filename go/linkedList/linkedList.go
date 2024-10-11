@@ -5,12 +5,12 @@ import "fmt"
 // Node is a node that has a value
 // and a pointer to the next node
 type Node struct {
-	value int
-	next  *Node
+	Value int
+	Next  *Node
 }
 
 func NewNode(value int) *Node {
-	return &Node{value: value}
+	return &Node{Value: value}
 }
 
 type LinkedList interface {
@@ -22,73 +22,73 @@ type LinkedList interface {
 }
 
 type MyLinkedList struct {
-	head *Node
+	Head *Node
 }
 
 func NewLinkedList() *MyLinkedList {
-	return &MyLinkedList{}
+	return &MyLinkedList{Head: nil}
 }
 
 // Insert inserts a new Node into the linked list
 func (ll *MyLinkedList) Insert(value int) bool {
-	if ll.head == nil {
-		ll.head = NewNode(value)
+	if ll.Head == nil {
+		ll.Head = NewNode(value)
 		return true
 	}
 
-	curr := ll.head
-	for curr.next != nil {
-		curr = curr.next
+	curr := ll.Head
+	for curr.Next != nil {
+		curr = curr.Next
 	}
-	curr.next = NewNode(value)
+	curr.Next = NewNode(value)
 	return true
 }
 
 // Search searches if value is in the linked list and returns a boolean
 func (ll *MyLinkedList) Search(value int) bool {
-	if ll.head == nil {
+	if ll.Head == nil {
 		return false
 	}
-	curr := ll.head
-	for curr.next != nil {
-		if curr.value == value {
+	curr := ll.Head
+	for curr.Next != nil {
+		if curr.Value == value {
 			return true
 		}
-		curr = curr.next
+		curr = curr.Next
 	}
 	return false
 }
 
 func (ll *MyLinkedList) Traverse() {
-	if ll.head == nil {
+	if ll.Head == nil {
 		return
 	}
-	curr := ll.head
+	curr := ll.Head
 	for curr != nil {
-		fmt.Println(curr.value)
-		curr = curr.next
+		fmt.Println(curr.Value)
+		curr = curr.Next
 	}
 }
 
 func (ll *MyLinkedList) Delete(value int) bool {
-	if ll.head == nil {
+	if ll.Head == nil {
 		return false
 	}
 
-	if ll.head.value == value {
-		ll.head = ll.head.next
+	if ll.Head.Value == value {
+		ll.Head = ll.Head.Next
 		return true
 	}
 
-	prev := ll.head
-	curr := ll.head.next
+	prev := ll.Head
+	curr := ll.Head.Next
 	for curr != nil {
-		if curr.value == value {
-			prev.next = curr.next
+		if curr.Value == value {
+			prev.Next = curr.Next
 			return true
 		}
 		prev = curr
-		curr = curr.next
+		curr = curr.Next
 	}
 
 	return false
