@@ -1,17 +1,16 @@
+// LeetCode 876
 package middleoflinkedlist
 
 import (
 	"github.com/qcbit/scratchpad/go/linkedlist"
 )
 
-
-
 func getMiddleOfLinkedList(head *linkedlist.Node) int {
 	if head == nil {
 		return 0
 	}
 
-	fast, slow := head, head	
+	fast, slow := head, head
 	for fast.Next != nil && fast.Next.Next != nil {
 		fast = fast.Next.Next
 		slow = slow.Next
