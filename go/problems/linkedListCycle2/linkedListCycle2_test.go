@@ -1,4 +1,4 @@
-package linkedlistcycle
+package linkedlistcycle2
 
 import (
 	"testing"
@@ -10,11 +10,11 @@ func TestLinkedListCycle(t *testing.T) {
 	tests := []struct {
 		list     []int
 		cyclePos int
-		want     bool
+		want     int
 	}{
-		{[]int{1, 2}, 0, true},
-		{[]int{1}, -1, false},
-		{[]int{3, 2, 0, -4}, 1, true},
+		{[]int{1, 2}, 0, 0},
+		{[]int{1}, -1, -1},
+		{[]int{3, 2, 0, -4}, 1, 1},
 	}
 
 	for _, tt := range tests {
@@ -23,7 +23,7 @@ func TestLinkedListCycle(t *testing.T) {
 			ll.Insert(num)
 		}
 		insertCycle(tt.cyclePos, ll.Head)
-		got := detectCycle(ll.Head)
+		got := getCycleLength(ll.Head)
 		if got != tt.want {
 			t.Errorf("got %v want %v for %v", got, tt.want, tt.list)
 		}
