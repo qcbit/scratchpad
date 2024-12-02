@@ -27,7 +27,38 @@
 // 1 <= price of any sized piece of the rod <= 105
 package cuttherodtomaximizeprofit
 
+import "math"
+
 func get_maximum_profit(price []int) int {
+	// n := len(price)
+	// memo := make(map[int]int, n+1)
+	// rodCutting(price, memo, n)
+	// return memo[n]
+	return get_maximum_profit_tabulation(price)
+}
+
+func rodCutting(price []int, memo map[int]int, n int) int {
+	// if already calculated, then return it
+	if n, ok := memo[n]; ok {
+		return memo[n]
+	}
+
+	// base case
+	if n == 0 {
+		return 0
+	}
+
+	max := int(math.Inf(-1))
+
+	for i := 1; i <= n; i++ {
+		max = int(math.Max(float64(max), float64(price[i-1]))) + rodCutting(price, memo, n-i)
+	}
+
+	memo[n] = max
+	return max
+}
+
+func get_maximum_profit_tabulation(price []int) int {
 	n := len(price)
 	table := make([]int, n+1)
 
@@ -37,7 +68,7 @@ func get_maximum_profit(price []int) int {
 
 	for i := 1; i <= n; i++ {
 		for j := 0; j < i; j++ {
-			table[i] = max(table[i], price[j] + table[i-j-1])
+			table[i] = max(table[i], price[j]+table[i-j-1])
 		}
 	}
 
