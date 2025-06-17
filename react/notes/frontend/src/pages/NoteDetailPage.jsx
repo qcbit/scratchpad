@@ -29,8 +29,6 @@ const NoteDetailPage = () => {
     fetchNote();
   }, [id]);
 
-  console.log(note);
-
   const handleDelete = async () => {
     if (!window.confirm('Confirm Delete')) return;
     try {

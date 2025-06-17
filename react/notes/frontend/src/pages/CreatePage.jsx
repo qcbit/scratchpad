@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router';
 import { ArrowLeftIcon } from 'lucide-react';
 import { toast } from 'react-hot-toast';
@@ -24,7 +24,7 @@ const CreatePage = () => {
       await axiosInstance.post('/notes', {
         title,
         content
-      })
+      });
       toast.success("Note created successfully!");
       navigate('/');
     } catch (error) {
@@ -34,10 +34,13 @@ const CreatePage = () => {
           duration: 4000,
           icon: '🚫',
         });
-      }
-      toast.error("Failed to create note. Please try again.");
+      } else {
+        toast.error("Failed to create note.");
+      } 
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -86,7 +89,7 @@ const CreatePage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CreatePage;

@@ -1,12 +1,11 @@
-import React from 'react'
 import { Link } from 'react-router';
 import { PenSquareIcon, Trash2Icon } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-import { formatDate } from '../lib/utils.js';
+import { formatDate } from '../lib/utils';
 import axiosInstance from '../lib/axios';
-import { toast } from 'react-hot-toast';
 
-export const NoteCard = ({note, setNotes}) => {
+const NoteCard = ({note, setNotes}) => {
   const handleDelete = async (e, id) => {
     e.preventDefault(); // Prevent the default link behavior
 
@@ -19,7 +18,7 @@ export const NoteCard = ({note, setNotes}) => {
       console.error('Error deleting note:', err);
       toast.error('Failed to delete note');
     }
-  }
+  };
 
   return (
     <Link to={`/note/${note._id}`}
@@ -33,7 +32,7 @@ export const NoteCard = ({note, setNotes}) => {
           <span className="text-sm text-base-content/60">
             {formatDate(new Date(note.createdAt))}
           </span>
-          <div className="flex items-centergap-1">
+          <div className="flex items-center gap-1">
             <PenSquareIcon className="size-4" />
             <button className="btn btn-ghost btn-xs text-error" onClick={(e) => handleDelete(e, note._id)}>
               <Trash2Icon className="size-4" />
@@ -42,5 +41,7 @@ export const NoteCard = ({note, setNotes}) => {
         </div>
       </div>
     </Link>
-  )
-}
+  );
+};
+
+export default NoteCard;

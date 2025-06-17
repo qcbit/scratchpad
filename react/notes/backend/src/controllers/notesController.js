@@ -13,11 +13,11 @@ export async function getAllNotes(req, res) {
 export async function getNote(req, res) {
   try {
     const noteId = req.params.id;
-    const gotNote = await Note.findById(noteId);
-    if (!gotNote) {
+    const note = await Note.findById(noteId);
+    if (!note) {
       return res.status(404).json({ message: "Note "+noteId+" not found" });
     }
-    res.status(200).json(gotNote, { message: "Note fetched successfully" });
+    res.status(200).json(note);
   } catch (error) {
     console.error("Error fetching note:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -27,9 +27,9 @@ export async function getNote(req, res) {
 export async function createNote(req, res) {
   try {
     const { title, content } = req.body;
-    const newNote = new Note({ title, content });
-    const savedNote = await newNote.save();
-    res.status(201).json({savedNote, message: "Note created successfully"});
+    const note = new Note({ title, content });
+    const savedNote = await note.save();
+    res.status(201).json(savedNote);
   } catch (error) {
     console.error("Error creating note:", error);
     res.status(500).json({ message: "Internal server error" }); 
@@ -44,7 +44,7 @@ export async function updateNote(req, res) {
     if (!updatedNote) {
       return res.status(404).json({ message: "Note "+noteId+" not found" });
     }
-    res.status(200).json({ updatedNote, message: "Note updated successfully" });
+    res.status(200).json(updatedNote);
   } catch (error) {
     console.error("Error updating note:", error);
     res.status(500).json({ message: "Internal server error" });
