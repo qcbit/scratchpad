@@ -93,3 +93,20 @@ func (ll *MyLinkedList) Delete(value int) bool {
 
 	return false
 }
+
+// reverse reverses a linked list in place
+func Reverse(list *MyLinkedList) {
+	if list.Head == nil {
+		return
+	}
+
+	var prev *Node
+	curr := list.Head
+	for curr != nil {
+		next := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = next
+	}
+	list.Head = prev
+}
