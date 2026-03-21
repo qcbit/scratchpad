@@ -49,18 +49,20 @@ func (cq *MyCircularQueue) enQueue(v int) bool {
 }
 
 func (cq *MyCircularQueue) deQueue() bool {
-	if cq.size == 0 {
+	switch cq.size {
+	case 0:
 		return false
-	} else if cq.size == 1 {
+	case 1:
 		cq.q[cq.head] = -1
 		cq.head = -1
 		cq.tail = -1
 		cq.size = 0
-	} else {
+	default:
 		cq.q[cq.head] = -1
 		cq.head = (cq.head + 1) % cq.capacity
 		cq.size--
 	}
+
 	return true
 }
 
